@@ -15,8 +15,6 @@ describe("Register Use Case", ()=> {
     sut = new RegisterUseCase(usersRepository);
   });
   it("should be able to register", async ()=>{
-
-
     const {user} = await sut.execute({
       name: "John Doe",
       email: "johndoe@example.com",

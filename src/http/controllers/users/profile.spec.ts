@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "@/app";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAndAuthenticateUser } from "@/utils/test/create-and-authenticate-user";
+import { createAndNoAuthenticateUser } from "@/utils/test/create-and-no-authenticate-user";
 
 describe("Profile (e2e)", () => {
   beforeAll(async () => {
@@ -25,6 +26,21 @@ describe("Profile (e2e)", () => {
       expect.objectContaining({
         email: "johndoe@example.com",
       }),
+    );
+  });
+
+  it("should not be able to get user profile", async () => {
+    const { token } = await createAndNoAuthenticateUser(app);
+
+    const profileResponse = await request(app.server)
+      .get("/me")
+      .set("Authorization", "Bearer fakeTon")
+      .send();
+
+    expect(profileResponse.statusCode).toEqual(401);
+    expect(profileResponse.body).toEqual({
+      message: "Unauthorized.",
+    }
     );
   });
 });

@@ -23,4 +23,16 @@ describe("Register (e2e)", () => {
 
     expect(response.statusCode).toEqual(201);
   });
+
+  it("should not be able a register a user already exists", async () => {
+    const response = await request(app.server)
+      .post("/users")
+      .send({
+        name: "John",
+        email: "john@gmail.com",
+        password: "password"
+      });
+
+    expect(response.statusCode).toEqual(409);
+  });
 });
