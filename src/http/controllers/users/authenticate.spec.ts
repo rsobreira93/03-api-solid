@@ -29,7 +29,7 @@ describe("Authenticate (e2e)", () => {
     });
   });
 
-  it("should ot be able to authenticate", async () => {
+  it("should not be able to authenticate", async () => {
     await request(app.server).post("/users").send({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -46,4 +46,5 @@ describe("Authenticate (e2e)", () => {
       message: expect.any(String),
     });
   });
+
 });
